@@ -1,7 +1,10 @@
-import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Dashboard() {
+  const navigate = useNavigate()
+  const user = JSON.parse(localStorage.getItem('user') || '{}')
+
   const [exercises, setExercises] = useState([
     { id: 1, name: 'Neck stretches', detail: '10 reps · hold 15 seconds each', done: false },
     { id: 2, name: 'Shoulder rolls', detail: '2 sets · 10 forward, 10 backward', done: false },
@@ -16,6 +19,12 @@ function Dashboard() {
     ))
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    navigate('/login')
+  }
+
   const doneCount = exercises.filter(ex => ex.done).length
 
   return (
@@ -27,11 +36,19 @@ function Dashboard() {
           </div>
           <span className="text-xl font-bold text-slate-900">MOVIRA</span>
         </div>
+        <button
+          onClick={handleLogout}
+          className="text-slate-600 font-medium hover:text-slate-900"
+        >
+          Log out
+        </button>
       </nav>
 
       <div className="max-w-4xl mx-auto px-6 py-10">
         <p className="text-sm font-medium text-teal-600">Your dashboard</p>
-        <h1 className="text-3xl font-bold text-slate-900 mt-1">Welcome back, Sarah!</h1>
+        <h1 className="text-3xl font-bold text-slate-900 mt-1">
+          Welcome back, {user.name || 'there'}!
+        </h1>
         <p className="text-slate-600 mt-2">Keep up the momentum — every session brings you closer to full recovery.</p>
 
         <div className="grid sm:grid-cols-2 gap-4 mt-8">
@@ -80,7 +97,7 @@ function Dashboard() {
           </button>
           <Link to="/assessment" className="border border-gray-300 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 text-center">
             Take Assessment
-        </Link>
+          </Link>
         </div>
       </div>
     </div>

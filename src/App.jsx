@@ -2,6 +2,9 @@ import { Routes, Route, Link } from 'react-router-dom'
 import Dashboard from './Dashboard'
 import Assessment from './Assessment'
 import Results from './Results'
+import Login from './Login'
+import Signup from './Signup'
+import ProtectedRoute from './ProtectedRoute'
 import './App.css'
 
 function Landing() {
@@ -21,10 +24,10 @@ function Landing() {
           <a href="#" className="hover:text-teal-600">Contact</a>
         </div>
         <div className="flex items-center gap-4">
-          <Link to="/dashboard" className="text-slate-700 font-medium">Sign in</Link>
-          <Link to="/dashboard" className="bg-teal-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-teal-700">
-            Get Started
-          </Link>
+          <Link to="/login" className="text-slate-700 font-medium">Sign in</Link>
+          <Link to="/signup" className="bg-teal-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-teal-700">
+          Get Started
+        </Link>
         </div>
       </nav>
 
@@ -55,9 +58,11 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/assessment" element={<Assessment />} />
-      <Route path="/results" element={<Results />} />
+      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      <Route path="/assessment" element={<ProtectedRoute><Assessment /></ProtectedRoute>} />
+      <Route path="/results" element={<ProtectedRoute><Results /></ProtectedRoute>} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
     </Routes>
   )
 }
