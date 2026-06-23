@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const GEMINI_API_KEY = 'AIzaSyC6MIJpMsEeRXnXgPT8c3V32JehDumxjew' // replace with your key
+const API = 'https://movira-backend.onrender.com'
 
 const categories = [
   {
@@ -178,46 +178,21 @@ function Assessment() {
 
   const callGemini = async (finalAnswers) => {
     try {
-      const answerText = Object.entries(finalAnswers)
-        .map(([key, val]) => `${key}: ${val}`)
-        .join('\n')
-
-      const prompt = `You are an expert physiotherapist. A patient has completed a detailed assessment.
-
-Category: ${selectedCategory.label}
-Chief Complaint: ${chiefComplaint || 'Not specified'}
-
-Patient Answers:
-${answerText}
-
-Based on this, provide:
-1. A likely diagnosis or condition (2-3 sentences)
-2. 4-5 specific recommended exercises with sets/reps
-3. 3 diet/nutrition tips relevant to their condition
-4. 3 lifestyle modifications
-5. Red flags to watch for (when to see a doctor urgently)
-6. Expected recovery timeline
-
-Format your response in clear sections using these exact headings:
-DIAGNOSIS:
-EXERCISES:
-DIET:
-LIFESTYLE:
-RED FLAGS:
-TIMELINE:`
-
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-          }),
-        }
-      )
+      const token = localStorage.getItem('token')
+      const response = await fetch(`${API}/api/ai/diagnose`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          answers: finalAnswers,
+          category: selectedCategory.label,
+          chiefComplaint,
+        }),
+      })
       const data = await response.json()
-      return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Unable to generate diagnosis.'
+      return data.diagnosis || 'Unable to generate diagnosis.'
     } catch (err) {
       return 'Unable to connect to AI. Please try again.'
     }
