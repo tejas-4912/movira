@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import confetti from 'canvas-confetti'
 
 const API = 'https://movira-backend.onrender.com'
 
@@ -11,26 +12,37 @@ const quotes = [
   "Your body heals faster when your mind believes it can.",
 ]
 
-function StatCard({ icon, label, value, sub, gradient }) {
+const DEFAULT_EXERCISES = [
+  { id: 1, name: 'Neck stretches', detail: '10 reps · hold 15 seconds each' },
+  { id: 2, name: 'Shoulder rolls', detail: '2 sets · 10 forward, 10 backward' },
+  { id: 3, name: 'Cat-cow stretch', detail: '8 reps' },
+  { id: 4, name: 'Hip flexor stretch', detail: '30 seconds each side' },
+  { id: 5, name: 'Ankle circles', detail: '10 reps each direction' },
+]
+
+function Ring({ value, max, color, label, icon, size = 80 }) {
+  const r = size * 0.38
+  const circ = 2 * Math.PI * r
+  const pct = Math.min(value / max, 1)
+  const dash = pct * circ
   return (
-    <div className={`rounded-2xl p-5 bg-gradient-to-br ${gradient} flex flex-col gap-1`}>
-      <div className="flex items-center gap-2 mb-1">
-        <span className="text-xl">{icon}</span>
-        <p className="text-xs font-semibold uppercase tracking-widest text-white/60">{label}</p>
+    <div className="flex flex-col items-center gap-2">
+      <div className="relative" style={{ width: size, height: size }}>
+        <svg width={size} height={size} className="-rotate-90">
+          <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="#1e293b" strokeWidth="8" />
+          <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth="8"
+            strokeDasharray={`${dash} ${circ}`} strokeLinecap="round"
+            style={{ transition: 'stroke-dasharray 1s ease' }} />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-lg">{icon}</span>
+          <span className="text-xs font-bold text-white">{Math.round(pct * 100)}%</span>
+        </div>
       </div>
-      <p className="text-3xl font-bold text-white">{value}</p>
-      {sub && <p className="text-xs text-white/60">{sub}</p>}
+      <p className="text-xs text-slate-400 text-center">{label}</p>
     </div>
   )
 }
-
-const DEFAULT_EXERCISES = [
-  { id: 1, name: 'Neck stretches', detail: '10 reps · hold 15 seconds each', done: false },
-  { id: 2, name: 'Shoulder rolls', detail: '2 sets · 10 forward, 10 backward', done: false },
-  { id: 3, name: 'Cat-cow stretch', detail: '8 reps', done: false },
-  { id: 4, name: 'Hip flexor stretch', detail: '30 seconds each side', done: false },
-  { id: 5, name: 'Ankle circles', detail: '10 reps each direction', done: false },
-]
 
 function ExerciseCalendar({ history }) {
   const days = []
@@ -38,22 +50,21 @@ function ExerciseCalendar({ history }) {
     const d = new Date()
     d.setDate(d.getDate() - i)
     const dateStr = d.toISOString().split('T')[0]
-    const entry = history?.find(h => h.date === dateStr)
+    const entry = (history || []).find(h => h.date === dateStr)
     days.push({ date: dateStr, completed: entry?.completed || false, count: entry?.count || 0 })
   }
   return (
     <div>
-      <h3 className="text-sm font-semibold text-slate-300 mb-3">Exercise History (Last 28 Days)</h3>
+      <h3 className="text-sm font-semibold text-slate-300 mb-3">Last 28 Days</h3>
       <div className="flex flex-wrap gap-1.5">
         {days.map((d, i) => (
           <div key={i} title={`${d.date}: ${d.completed ? `${d.count} exercises` : 'None'}`}
-            className={`w-6 h-6 rounded-md transition-colors ${d.completed ? 'bg-teal-500' : 'bg-slate-800'}`}>
-          </div>
+            className={`w-6 h-6 rounded-md transition-all hover:scale-125 cursor-default ${d.completed ? 'bg-teal-500 shadow-sm shadow-teal-500/50' : 'bg-slate-800'}`} />
         ))}
       </div>
-      <div className="flex items-center gap-3 mt-2">
-        <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-teal-500"></div><span className="text-xs text-slate-500">Completed</span></div>
-        <div className="flex items-center gap-1"><div className="w-3 h-3 rounded bg-slate-800"></div><span className="text-xs text-slate-500">Missed</span></div>
+      <div className="flex items-center gap-4 mt-2">
+        <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-teal-500"></div><span className="text-xs text-slate-500">Completed</span></div>
+        <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-slate-800"></div><span className="text-xs text-slate-500">Missed</span></div>
       </div>
     </div>
   )
@@ -62,22 +73,18 @@ function ExerciseCalendar({ history }) {
 function WeeklyReport({ progress, journalEntries }) {
   const weekDates = []
   for (let i = 6; i >= 0; i--) {
-    const d = new Date()
-    d.setDate(d.getDate() - i)
+    const d = new Date(); d.setDate(d.getDate() - i)
     weekDates.push(d.toISOString().split('T')[0])
   }
   const history = progress.exerciseHistory || []
-  const weekHistory = history.filter(h => weekDates.includes(h.date))
-  const daysActive = weekHistory.filter(h => h.completed).length
+  const daysActive = history.filter(h => weekDates.includes(h.date) && h.completed).length
   const weekJournal = (journalEntries || []).filter(e => weekDates.includes(e.date))
   const avgPain = weekJournal.length > 0
-    ? (weekJournal.reduce((s, e) => s + (e.painLevel || 0), 0) / weekJournal.length).toFixed(1)
-    : 'N/A'
-  const avgWater = Math.round(progress.waterMl / 7)
+    ? (weekJournal.reduce((s, e) => s + (e.painLevel || 0), 0) / weekJournal.length).toFixed(1) : 'N/A'
 
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 mb-6">
-      <h2 className="text-base font-bold mb-4 flex items-center gap-2">📊 Weekly Report</h2>
+      <h2 className="text-base font-bold mb-4">📊 Weekly Report</h2>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
           { label: 'Days Active', value: `${daysActive}/7`, icon: '🏃', color: 'text-teal-400' },
@@ -92,16 +99,8 @@ function WeeklyReport({ progress, journalEntries }) {
           </div>
         ))}
       </div>
-      {daysActive >= 5 && (
-        <div className="mt-3 bg-teal-500/10 border border-teal-500/30 rounded-xl p-3 text-sm text-teal-300">
-          🎉 Great week! You were active {daysActive} days. Keep it up!
-        </div>
-      )}
-      {daysActive < 3 && (
-        <div className="mt-3 bg-orange-500/10 border border-orange-500/30 rounded-xl p-3 text-sm text-orange-300">
-          💪 Try to be more active this week. Aim for at least 5 days!
-        </div>
-      )}
+      {daysActive >= 5 && <div className="mt-3 bg-teal-500/10 border border-teal-500/30 rounded-xl p-3 text-sm text-teal-300">🎉 Great week! You were active {daysActive} days!</div>}
+      {daysActive < 3 && <div className="mt-3 bg-orange-500/10 border border-orange-500/30 rounded-xl p-3 text-sm text-orange-300">💪 Try to be more active this week. Aim for at least 5 days!</div>}
     </div>
   )
 }
@@ -112,45 +111,42 @@ export default function Dashboard() {
   const token = localStorage.getItem('token')
   const quote = quotes[new Date().getDay() % quotes.length]
   const today = new Date().toISOString().split('T')[0]
+  const prevStreak = useRef(null)
+  const prevLevel = useRef(null)
 
-  const [progress, setProgress] = useState({
-    streak: 0, xp: 0, level: 1, recoveryProgress: 0,
-    waterMl: 0, lastActiveDate: null, bestStreak: 0,
-    exercisesDoneToday: [], challengesDoneToday: [], exerciseHistory: [],
-  })
-  const [exercises, setExercises] = useState(DEFAULT_EXERCISES)
+  const [progress, setProgress] = useState({ streak: 0, xp: 0, level: 1, recoveryProgress: 0, waterMl: 0, lastActiveDate: null, bestStreak: 0, exercisesDoneToday: [], challengesDoneToday: [], exerciseHistory: [] })
+  const [exercises, setExercises] = useState(DEFAULT_EXERCISES.map(e => ({ ...e, done: false })))
   const [journalEntries, setJournalEntries] = useState([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [milestone, setMilestone] = useState(null)
 
-  const challenges = [
-    { id: 'water', text: 'Log your water intake (500ml+)', xp: 10 },
-    { id: 'exercises', text: 'Complete all exercises', xp: 25 },
-    { id: 'walk', text: 'Take a 10-minute walk', xp: 15 },
-  ]
+  const fireConfetti = () => {
+    confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 }, colors: ['#14b8a6', '#06b6d4', '#8b5cf6', '#f59e0b'] })
+  }
 
   useEffect(() => {
     const load = async () => {
       try {
-        const [progRes, journalRes] = await Promise.all([
+        const [pRes, jRes] = await Promise.all([
           axios.get(`${API}/api/user/progress`, { headers: { Authorization: `Bearer ${token}` } }),
           axios.get(`${API}/api/journal`, { headers: { Authorization: `Bearer ${token}` } }),
         ])
-        const data = progRes.data.progress
+        const data = pRes.data.progress
         if (data) {
           let streak = data.streak || 0
-          let bestStreak = data.bestStreak || 0
           const lastActive = data.lastActiveDate ? data.lastActiveDate.split('T')[0] : null
-          const yesterday = new Date()
-          yesterday.setDate(yesterday.getDate() - 1)
+          const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1)
           const yesterdayStr = yesterday.toISOString().split('T')[0]
           if (lastActive && lastActive !== today && lastActive !== yesterdayStr) streak = 0
-
           const doneTodayIds = data.exercisesDoneToday || []
           setExercises(DEFAULT_EXERCISES.map(ex => ({ ...ex, done: doneTodayIds.includes(ex.id) })))
-          setProgress({ ...data, streak, bestStreak, exercisesDoneToday: doneTodayIds, exerciseHistory: data.exerciseHistory || [] })
+          const prog = { ...data, streak, exercisesDoneToday: doneTodayIds, exerciseHistory: data.exerciseHistory || [] }
+          setProgress(prog)
+          prevStreak.current = streak
+          prevLevel.current = data.level || 1
         }
-        setJournalEntries(journalRes.data.journal || [])
+        setJournalEntries(jRes.data.journal || [])
       } catch {}
       setLoading(false)
     }
@@ -165,6 +161,21 @@ export default function Dashboard() {
     setSaving(false)
   }
 
+  const checkMilestones = (newP) => {
+    const milestoneStreaks = [3, 7, 14, 30]
+    if (milestoneStreaks.includes(newP.streak) && newP.streak !== prevStreak.current) {
+      setMilestone(`🔥 ${newP.streak}-day streak! Keep going!`)
+      fireConfetti()
+      prevStreak.current = newP.streak
+    }
+    if (newP.level > (prevLevel.current || 1)) {
+      setMilestone(`🎉 Level Up! You're now Level ${newP.level}!`)
+      fireConfetti()
+      prevLevel.current = newP.level
+    }
+    setTimeout(() => setMilestone(null), 4000)
+  }
+
   const toggleExercise = (id) => {
     const ex = exercises.find(e => e.id === id)
     const wasChecked = ex.done
@@ -176,65 +187,60 @@ export default function Dashboard() {
     const newXp = Math.max(0, progress.xp + xpChange)
     const newLevel = Math.floor(newXp / 100) + 1
     const exerciseRecovery = Math.round((doneCount / DEFAULT_EXERCISES.length) * 40)
-    const baseRecovery = Math.min(progress.recoveryProgress, 60)
-    const newRecovery = Math.min(100, baseRecovery + exerciseRecovery)
+    const newRecovery = Math.min(100, Math.min(progress.recoveryProgress, 60) + exerciseRecovery)
     let newStreak = progress.streak
-    let newBestStreak = progress.bestStreak
-    if (!wasChecked && progress.lastActiveDate !== today) {
-      newStreak = progress.streak + 1
-      newBestStreak = Math.max(newStreak, progress.bestStreak)
-    }
-    let newChallengesDone = [...progress.challengesDoneToday]
-    if (doneCount === DEFAULT_EXERCISES.length && !newChallengesDone.includes('exercises')) {
-      newChallengesDone.push('exercises')
-    } else if (doneCount < DEFAULT_EXERCISES.length) {
-      newChallengesDone = newChallengesDone.filter(c => c !== 'exercises')
-    }
-    // Update exercise history
+    let newBest = progress.bestStreak
+    if (!wasChecked && progress.lastActiveDate !== today) { newStreak = progress.streak + 1; newBest = Math.max(newStreak, progress.bestStreak) }
+    let newChallenges = [...progress.challengesDoneToday]
+    if (doneCount === DEFAULT_EXERCISES.length && !newChallenges.includes('exercises')) newChallenges.push('exercises')
+    else if (doneCount < DEFAULT_EXERCISES.length) newChallenges = newChallenges.filter(c => c !== 'exercises')
     const existingHistory = progress.exerciseHistory || []
-    const todayHistory = existingHistory.find(h => h.date === today)
-    let newHistory
-    if (todayHistory) {
-      newHistory = existingHistory.map(h => h.date === today ? { date: today, completed: doneCount > 0, count: doneCount } : h)
-    } else {
-      newHistory = [...existingHistory, { date: today, completed: doneCount > 0, count: doneCount }]
-    }
-    const newProgress = { ...progress, xp: newXp, level: newLevel, streak: newStreak, bestStreak: newBestStreak, recoveryProgress: newRecovery, lastActiveDate: today, exercisesDoneToday: doneTodayIds, challengesDoneToday: newChallengesDone, exerciseHistory: newHistory }
-    setProgress(newProgress)
-    saveProgress(newProgress)
+    const todayHist = existingHistory.find(h => h.date === today)
+    const newHistory = todayHist
+      ? existingHistory.map(h => h.date === today ? { date: today, completed: doneCount > 0, count: doneCount } : h)
+      : [...existingHistory, { date: today, completed: doneCount > 0, count: doneCount }]
+    const newP = { ...progress, xp: newXp, level: newLevel, streak: newStreak, bestStreak: newBest, recoveryProgress: newRecovery, lastActiveDate: today, exercisesDoneToday: doneTodayIds, challengesDoneToday: newChallenges, exerciseHistory: newHistory }
+    setProgress(newP)
+    saveProgress(newP)
+    checkMilestones(newP)
   }
 
   const addWater = (ml) => {
     const newWater = Math.min(progress.waterMl + ml, 2000)
-    let newChallengesDone = [...progress.challengesDoneToday]
+    let newChallenges = [...progress.challengesDoneToday]
     let newXp = progress.xp
-    if (newWater >= 500 && !newChallengesDone.includes('water')) { newChallengesDone.push('water'); newXp += 10 }
-    const newProgress = { ...progress, waterMl: newWater, xp: newXp, level: Math.floor(newXp / 100) + 1, challengesDoneToday: newChallengesDone }
-    setProgress(newProgress)
-    saveProgress(newProgress)
+    if (newWater >= 500 && !newChallenges.includes('water')) { newChallenges.push('water'); newXp += 10 }
+    const newP = { ...progress, waterMl: newWater, xp: newXp, level: Math.floor(newXp / 100) + 1, challengesDoneToday: newChallenges }
+    setProgress(newP); saveProgress(newP)
   }
 
-  const completeChallenge = (challengeId, xpAmount) => {
-    if (progress.challengesDoneToday.includes(challengeId)) return
-    const newChallengesDone = [...progress.challengesDoneToday, challengeId]
-    const newXp = progress.xp + xpAmount
-    const newProgress = { ...progress, xp: newXp, level: Math.floor(newXp / 100) + 1, challengesDoneToday: newChallengesDone }
-    setProgress(newProgress)
-    saveProgress(newProgress)
+  const completeChallenge = (id, xp) => {
+    if (progress.challengesDoneToday.includes(id)) return
+    const newChallenges = [...progress.challengesDoneToday, id]
+    const newXp = progress.xp + xp
+    const newP = { ...progress, xp: newXp, level: Math.floor(newXp / 100) + 1, challengesDoneToday: newChallenges }
+    setProgress(newP); saveProgress(newP)
   }
 
   const handleLogout = () => { localStorage.removeItem('token'); localStorage.removeItem('user'); navigate('/login') }
 
-  const doneCount = exercises.filter(ex => ex.done).length
+  const doneCount = exercises.filter(e => e.done).length
   const sessionProgress = Math.round((doneCount / exercises.length) * 100)
-  const xpToNextLevel = (progress.level * 100) - progress.xp
-  const levelProgress = Math.round(((progress.xp % 100) / 100) * 100)
+  const xpToNext = (progress.level * 100) - progress.xp
+  const levelPct = Math.round(((progress.xp % 100) / 100) * 100)
+
+  const challenges = [
+    { id: 'water', text: 'Log water intake (500ml+)', xp: 10 },
+    { id: 'exercises', text: 'Complete all exercises', xp: 25 },
+    { id: 'walk', text: 'Take a 10-minute walk', xp: 15 },
+  ]
 
   const navItems = [
     { icon: '📊', label: 'Dashboard', to: '/dashboard', active: true },
     { icon: '📋', label: 'Assessment', to: '/assessment' },
     { icon: '📓', label: 'Pain Journal', to: '/journal' },
     { icon: '🗓️', label: 'Protocols', to: '/protocols' },
+    { icon: '🏅', label: 'Badges', to: '/badges' },
     { icon: '🤖', label: 'AI Consultant', to: '/assessment' },
     { icon: '👤', label: 'My Profile', to: '/profile' },
   ]
@@ -247,15 +253,23 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
+      {/* Milestone toast */}
+      {milestone && (
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-gradient-to-r from-teal-500 to-purple-500 text-white px-6 py-3 rounded-2xl shadow-2xl font-semibold text-sm animate-bounce">
+          {milestone}
+        </div>
+      )}
+
+      {/* Sidebar */}
       <div className="fixed left-0 top-0 h-full w-56 bg-slate-900 border-r border-slate-800 flex flex-col py-6 px-4 z-10 hidden lg:flex">
         <div className="flex items-center gap-2 mb-10 px-2">
-          <div className="w-9 h-9 bg-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">M</div>
+          <div className="w-9 h-9 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-teal-500/30">M</div>
           <span className="text-lg font-bold">MOVIRA</span>
         </div>
         <nav className="flex flex-col gap-1 flex-1">
           {navItems.map(item => (
             <Link key={item.label} to={item.to}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${item.active ? 'bg-teal-500/10 text-teal-400' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}>
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${item.active ? 'bg-gradient-to-r from-teal-500/20 to-purple-500/10 text-teal-400 border border-teal-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}>
               <span>{item.icon}</span> {item.label}
             </Link>
           ))}
@@ -268,45 +282,51 @@ export default function Dashboard() {
       </div>
 
       <div className="lg:ml-56">
+        {/* Mobile nav */}
         <nav className="flex items-center justify-between px-6 py-4 border-b border-slate-800 lg:hidden">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center text-white font-bold">M</div>
             <span className="font-bold">MOVIRA</span>
           </div>
-          <button onClick={handleLogout} className="text-slate-400 text-sm hover:text-white">Sign out</button>
+          <button onClick={handleLogout} className="text-slate-400 text-sm">Sign out</button>
         </nav>
 
         <div className="px-6 lg:px-10 py-8 max-w-5xl mx-auto">
           {/* Hero */}
-          <div className="bg-gradient-to-br from-slate-800 via-slate-800 to-teal-900 rounded-2xl p-7 mb-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-teal-500/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          <div className="bg-gradient-to-br from-slate-800 via-slate-800 to-teal-900 rounded-2xl p-7 mb-8 relative overflow-hidden border border-slate-700">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
             <p className="text-xs text-teal-400 uppercase tracking-widest font-semibold mb-1">Recovery Dashboard</p>
-            <h1 className="text-3xl font-bold mb-1">Welcome back, {user.name?.toUpperCase() || 'THERE'}!</h1>
+            <h1 className="text-3xl font-bold mb-1">Welcome back, {user.name?.toUpperCase() || 'THERE'}! 👋</h1>
             <p className="text-slate-400 text-sm italic mb-5">"{quote}"</p>
             <div className="flex flex-wrap gap-3">
-              <span className="bg-slate-700/80 text-sm px-4 py-1.5 rounded-full flex items-center gap-2">🔥 <strong>{progress.streak}</strong> day streak</span>
-              <span className="bg-slate-700/80 text-sm px-4 py-1.5 rounded-full flex items-center gap-2">⭐ <strong>{progress.xp} XP</strong> total</span>
-              <span className="bg-slate-700/80 text-sm px-4 py-1.5 rounded-full flex items-center gap-2">🏅 Level <strong>{progress.level}</strong></span>
+              <span className="bg-gradient-to-r from-orange-500/20 to-orange-600/20 border border-orange-500/30 text-sm px-4 py-1.5 rounded-full flex items-center gap-2 text-orange-300">🔥 <strong>{progress.streak}</strong> day streak</span>
+              <span className="bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 border border-yellow-500/30 text-sm px-4 py-1.5 rounded-full flex items-center gap-2 text-yellow-300">⭐ <strong>{progress.xp} XP</strong></span>
+              <span className="bg-gradient-to-r from-purple-500/20 to-purple-600/20 border border-purple-500/30 text-sm px-4 py-1.5 rounded-full flex items-center gap-2 text-purple-300">🏅 Level <strong>{progress.level}</strong></span>
             </div>
             {saving && <p className="text-xs text-teal-400 mt-3 animate-pulse">Saving...</p>}
           </div>
 
-          {/* Stat cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <StatCard icon="🔥" label="Streak" value={`${progress.streak} days`} sub={`Best: ${progress.bestStreak}d`} gradient="from-orange-600 to-orange-800" />
-            <StatCard icon="🎯" label="Today" value={`${doneCount}/${exercises.length}`} sub="exercises done" gradient="from-teal-600 to-teal-800" />
-            <StatCard icon="💧" label="Water" value={`${progress.waterMl}ml`} sub="Goal: 2000ml" gradient="from-blue-600 to-blue-800" />
-            <StatCard icon="📈" label="Recovery" value={`${progress.recoveryProgress}%`} sub="Overall progress" gradient="from-purple-600 to-purple-800" />
+          {/* Progress rings */}
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-6">
+            <h2 className="text-base font-bold mb-5">Today's Progress</h2>
+            <div className="flex justify-around flex-wrap gap-4">
+              <Ring value={doneCount} max={exercises.length} color="#14b8a6" label="Exercises" icon="🎯" size={90} />
+              <Ring value={progress.waterMl} max={2000} color="#3b82f6" label="Hydration" icon="💧" size={90} />
+              <Ring value={progress.recoveryProgress} max={100} color="#8b5cf6" label="Recovery" icon="📈" size={90} />
+              <Ring value={progress.streak} max={30} color="#f59e0b" label="Streak" icon="🔥" size={90} />
+              <Ring value={progress.xp % 100} max={100} color="#ec4899" label="Level XP" icon="⭐" size={90} />
+            </div>
           </div>
 
           {/* Level bar */}
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-semibold">Level {progress.level}</span>
-              <span className="text-xs text-slate-400">{progress.xp % 100}/100 XP · {xpToNextLevel} to Level {progress.level + 1}</span>
+              <span className="text-xs text-slate-400">{progress.xp % 100}/100 XP · {xpToNext} XP to Level {progress.level + 1}</span>
             </div>
-            <div className="w-full bg-slate-800 rounded-full h-2">
-              <div className="bg-yellow-400 h-2 rounded-full transition-all duration-500" style={{ width: `${levelProgress}%` }}></div>
+            <div className="w-full bg-slate-800 rounded-full h-3 overflow-hidden">
+              <div className="bg-gradient-to-r from-yellow-400 to-orange-400 h-3 rounded-full transition-all duration-1000" style={{ width: `${levelPct}%` }}></div>
             </div>
           </div>
 
@@ -320,18 +340,18 @@ export default function Dashboard() {
                 <h2 className="text-lg font-bold">Today's Exercises</h2>
                 <span className="text-sm text-slate-400">{doneCount}/{exercises.length} done</span>
               </div>
-              <div className="w-full bg-slate-800 rounded-full h-1.5 mb-5">
-                <div className="bg-teal-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${sessionProgress}%` }}></div>
+              <div className="w-full bg-slate-800 rounded-full h-2 mb-5">
+                <div className="bg-gradient-to-r from-teal-500 to-teal-400 h-2 rounded-full transition-all duration-500" style={{ width: `${sessionProgress}%` }}></div>
               </div>
               <div className="space-y-3">
                 {exercises.map(ex => (
-                  <label key={ex.id} className="flex items-center gap-4 p-4 rounded-xl border border-slate-800 hover:border-slate-600 cursor-pointer transition-colors">
+                  <label key={ex.id} className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all ${ex.done ? 'border-teal-700 bg-teal-500/5' : 'border-slate-800 hover:border-slate-600'}`}>
                     <input type="checkbox" checked={ex.done} onChange={() => toggleExercise(ex.id)} className="w-5 h-5 accent-teal-500 flex-shrink-0" />
                     <div className="flex-1">
                       <p className={`font-medium text-sm ${ex.done ? 'text-slate-500 line-through' : 'text-white'}`}>{ex.name}</p>
                       <p className="text-xs text-slate-500">{ex.detail}</p>
                     </div>
-                    {!ex.done && <span className="text-xs text-teal-400">+10 XP</span>}
+                    <span className={`text-xs font-semibold ${ex.done ? 'text-teal-500' : 'text-slate-500'}`}>{ex.done ? '✓ +10 XP' : '+10 XP'}</span>
                   </label>
                 ))}
               </div>
@@ -339,6 +359,7 @@ export default function Dashboard() {
 
             {/* Right col */}
             <div className="flex flex-col gap-4">
+              {/* Challenges */}
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                 <h2 className="text-base font-bold mb-4">🎯 Daily Challenges</h2>
                 <div className="space-y-3">
@@ -346,40 +367,42 @@ export default function Dashboard() {
                     const done = progress.challengesDoneToday.includes(c.id)
                     return (
                       <div key={c.id} onClick={() => !done && c.id === 'walk' && completeChallenge(c.id, c.xp)}
-                        className={`flex items-center justify-between gap-2 p-3 rounded-xl border transition-colors ${done ? 'border-teal-700 bg-teal-500/10' : 'border-slate-800 hover:border-slate-600 cursor-pointer'}`}>
+                        className={`flex items-center justify-between gap-2 p-3 rounded-xl border transition-all ${done ? 'border-teal-700 bg-teal-500/10' : 'border-slate-800 hover:border-slate-600 cursor-pointer'}`}>
                         <div className="flex items-center gap-3">
-                          <span className="text-sm">{done ? '✅' : '⬜'}</span>
+                          <span>{done ? '✅' : '⬜'}</span>
                           <p className={`text-sm ${done ? 'text-slate-500 line-through' : 'text-slate-300'}`}>{c.text}</p>
                         </div>
-                        <span className={`text-xs font-semibold flex-shrink-0 ${done ? 'text-slate-500' : 'text-teal-400'}`}>+{c.xp} XP</span>
+                        <span className={`text-xs font-bold flex-shrink-0 ${done ? 'text-slate-600' : 'text-teal-400'}`}>+{c.xp}</span>
                       </div>
                     )
                   })}
                 </div>
               </div>
 
+              {/* Water */}
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                 <h2 className="text-base font-bold mb-3">💧 Water Intake</h2>
-                <div className="w-full bg-slate-800 rounded-full h-2 mb-3">
-                  <div className="bg-blue-500 h-2 rounded-full transition-all" style={{ width: `${Math.min((progress.waterMl / 2000) * 100, 100)}%` }}></div>
+                <div className="w-full bg-slate-800 rounded-full h-3 mb-2 overflow-hidden">
+                  <div className="bg-gradient-to-r from-blue-500 to-cyan-400 h-3 rounded-full transition-all duration-500" style={{ width: `${Math.min((progress.waterMl / 2000) * 100, 100)}%` }}></div>
                 </div>
                 <p className="text-sm text-slate-400 mb-3">{progress.waterMl} / 2000 ml</p>
                 <div className="flex gap-2">
                   {[200, 300, 500].map(ml => (
-                    <button key={ml} onClick={() => addWater(ml)} className="flex-1 text-xs bg-slate-800 hover:bg-blue-900 border border-slate-700 text-slate-300 py-2 rounded-lg transition-colors">+{ml}ml</button>
+                    <button key={ml} onClick={() => addWater(ml)} className="flex-1 text-xs bg-slate-800 hover:bg-blue-900/50 border border-slate-700 hover:border-blue-600 text-slate-300 py-2 rounded-lg transition-all">+{ml}ml</button>
                   ))}
                 </div>
               </div>
 
+              {/* Quick actions */}
               <div className="flex flex-col gap-2">
-                <Link to="/assessment" className="bg-teal-500 hover:bg-teal-600 text-white text-center py-3 rounded-xl font-medium text-sm transition-colors">🤖 Start AI Assessment</Link>
-                <Link to="/journal" className="border border-slate-700 hover:border-slate-500 text-slate-300 py-3 rounded-xl font-medium text-sm transition-colors text-center">📓 Log Pain Journal</Link>
-                <Link to="/protocols" className="border border-slate-700 hover:border-slate-500 text-slate-300 py-3 rounded-xl font-medium text-sm transition-colors text-center">🗓️ View Protocols</Link>
+                <Link to="/assessment" className="bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-400 hover:to-teal-500 text-white text-center py-3 rounded-xl font-medium text-sm transition-all shadow-lg shadow-teal-500/20">🤖 Start AI Assessment</Link>
+                <Link to="/journal" className="bg-slate-900 border border-slate-700 hover:border-orange-500 text-slate-300 hover:text-orange-300 py-3 rounded-xl font-medium text-sm transition-all text-center">📓 Log Pain Journal</Link>
+                <Link to="/badges" className="bg-slate-900 border border-slate-700 hover:border-yellow-500 text-slate-300 hover:text-yellow-300 py-3 rounded-xl font-medium text-sm transition-all text-center">🏅 View Badges</Link>
               </div>
             </div>
           </div>
 
-          {/* Exercise history calendar */}
+          {/* Calendar */}
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
             <ExerciseCalendar history={progress.exerciseHistory} />
           </div>

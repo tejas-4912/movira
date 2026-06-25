@@ -8,6 +8,8 @@ import Onboarding from './Onboarding'
 import Journal from './Journal'
 import Protocols from './Protocols'
 import ProtectedRoute from './ProtectedRoute'
+import ChatAssistant from './ChatAssistant'
+import Badges from './Badges'
 import './App.css'
 
 function Landing() {
@@ -99,10 +101,21 @@ function App() {
       <Route path="/profile" element={<ProtectedRoute><Onboarding isEditMode={true} /></ProtectedRoute>} />
       <Route path="/journal" element={<ProtectedRoute><Journal /></ProtectedRoute>} />
       <Route path="/protocols" element={<ProtectedRoute><Protocols /></ProtectedRoute>} />
+      <Route path="/badges" element={<ProtectedRoute><Badges /></ProtectedRoute>} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
     </Routes>
   )
 }
 
-export default App
+function AppWithChat() {
+  const isLoggedIn = !!localStorage.getItem('token')
+  return (
+    <>
+      <App />
+      {isLoggedIn && <ChatAssistant />}
+    </>
+  )
+}
+
+export default AppWithChat
