@@ -16,10 +16,10 @@ const PROTOCOLS = [
     color: 'from-blue-600 to-blue-800',
     description: 'A structured program to relieve lower back pain, strengthen core muscles, and restore full mobility.',
     weeks: [
-      { week: 1, focus: 'Pain Relief & Gentle Mobility', exercises: ['Cat-cow stretch × 10', 'Knee-to-chest stretch × 30s each', 'Pelvic tilts × 15', 'Diaphragmatic breathing × 5 min', 'Gentle walking × 10 min'] },
-      { week: 2, focus: 'Core Activation', exercises: ['Dead bug × 3×10', 'Bird-dog × 3×10', 'Glute bridges × 3×15', 'Side-lying clamshells × 2×15', 'Walking × 15 min'] },
-      { week: 3, focus: 'Strength Building', exercises: ['Plank hold × 3×20s', 'Romanian deadlift (bodyweight) × 3×12', 'Hip flexor stretch × 30s', 'Seated lumbar rotation × 10 each', 'Walking × 20 min'] },
-      { week: 4, focus: 'Function & Return to Activity', exercises: ['Wall squats × 3×15', 'Single-leg balance × 30s each', 'Resistance band rows × 3×12', 'Full plank × 3×30s', 'Brisk walking × 25 min'] },
+      { week: 1, focus: 'Pain Relief & Gentle Mobility', exercises: ['Cat-cow stretch x 10', 'Knee-to-chest stretch x 30s each', 'Pelvic tilts x 15', 'Diaphragmatic breathing x 5 min', 'Gentle walking x 10 min'] },
+      { week: 2, focus: 'Core Activation', exercises: ['Dead bug x 3×10', 'Bird-dog x 3×10', 'Glute bridges x 3×15', 'Side-lying clamshells x 2×15', 'Walking x 15 min'] },
+      { week: 3, focus: 'Strength Building', exercises: ['Plank hold x 3×20s', 'Romanian deadlift (bodyweight) x 3×12', 'Hip flexor stretch x 30s', 'Seated lumbar rotation x 10 each', 'Walking x 20 min'] },
+      { week: 4, focus: 'Function & Return to Activity', exercises: ['Wall squats x 3×15', 'Single-leg balance x 30s each', 'Resistance band rows x 3×12', 'Full plank x 3×30s', 'Brisk walking x 25 min'] },
     ]
   },
   {
@@ -33,12 +33,12 @@ const PROTOCOLS = [
     color: 'from-green-600 to-green-800',
     description: 'Progressive knee strengthening program for post-injury or post-surgery recovery.',
     weeks: [
-      { week: 1, focus: 'Reduce Swelling & ROM', exercises: ['Ice therapy × 15 min', 'Ankle pumps × 20', 'Straight leg raises × 3×10', 'Heel slides × 3×15', 'Quad sets × 3×10'] },
-      { week: 2, focus: 'Quad & Hamstring Activation', exercises: ['Mini squats × 3×15', 'Terminal knee extensions × 3×15', 'Hamstring curls (lying) × 3×12', 'Step-ups (low) × 3×10', 'Calf raises × 3×20'] },
-      { week: 3, focus: 'Balance & Proprioception', exercises: ['Single-leg stance × 30s', 'Lateral band walks × 2×15', 'Wall squats × 3×20', 'Leg press (light) × 3×15', 'Cycling × 15 min'] },
-      { week: 4, focus: 'Strength', exercises: ['Lunges × 3×12', 'Romanian deadlifts × 3×12', 'Step-ups (high) × 3×10', 'Leg press (moderate) × 3×12', 'Cycling × 20 min'] },
-      { week: 5, focus: 'Power & Endurance', exercises: ['Split squats × 3×12', 'Lateral step-overs × 3×10', 'Resisted terminal extensions × 3×15', 'Single-leg press × 3×10', 'Swimming or cycling × 25 min'] },
-      { week: 6, focus: 'Return to Sport/Function', exercises: ['Jogging × 10 min', 'Agility ladder drills × 3 sets', 'Plyometric step-ups × 3×8', 'Full squats × 3×15', 'Sport-specific drills × 15 min'] },
+      { week: 1, focus: 'Reduce Swelling & ROM', exercises: ['Ice therapy x 15 min', 'Ankle pumps x 20', 'Straight leg raises x 3×10', 'Heel slides x 3×15', 'Quad sets x 3×10'] },
+      { week: 2, focus: 'Quad & Hamstring Activation', exercises: ['Mini squats x 3×15', 'Terminal knee extensions x 3×15', 'Hamstring curls (lying) x 3×12', 'Step-ups (low) x 3×10', 'Calf raises x 3×20'] },
+      { week: 3, focus: 'Balance & Proprioception', exercises: ['Single-leg stance x 30s', 'Lateral band walks x 2×15', 'Wall squats x 3×20', 'Leg press (light) x 3×15', 'Cycling x 15 min'] },
+      { week: 4, focus: 'Strength', exercises: ['Lunges x 3×12', 'Romanian deadlifts x 3×12', 'Step-ups (high) x 3×10', 'Leg press (moderate) x 3×12', 'Cycling x 20 min'] },
+      { week: 5, focus: 'Power & Endurance', exercises: ['Split squats x 3×12', 'Lateral step-overs x 3×10', 'Resisted terminal extensions x 3×15', 'Single-leg press x 3×10', 'Swimming or cycling x 25 min'] },
+      { week: 6, focus: 'Return to Sport/Function', exercises: ['Jogging x 10 min', 'Agility ladder drills x 3 sets', 'Plyometric step-ups x 3×8', 'Full squats x 3×15', 'Sport-specific drills x 15 min'] },
     ]
   },
   {
@@ -52,9 +52,9 @@ const PROTOCOLS = [
     color: 'from-purple-600 to-purple-800',
     description: 'Fix forward head posture, rounded shoulders, and upper back pain from desk work.',
     weeks: [
-      { week: 1, focus: 'Mobility & Awareness', exercises: ['Chin tucks × 3×10', 'Chest opener stretch × 30s', 'Thoracic spine rotation × 10 each', 'Shoulder rolls × 20', 'Neck side stretch × 30s each'] },
-      { week: 2, focus: 'Strength & Stability', exercises: ['Wall angels × 3×10', 'Band pull-aparts × 3×15', 'Prone Y-T-W × 3×8', 'Serratus anterior push-ups × 3×10', 'Deep neck flexors × 3×10'] },
-      { week: 3, focus: 'Integration & Habits', exercises: ['Overhead reach with band × 3×12', 'Thoracic extension over foam roller × 2 min', 'Standing posture holds × 5 min', 'Ergonomic breaks every hour', 'Full routine × daily'] },
+      { week: 1, focus: 'Mobility & Awareness', exercises: ['Chin tucks x 3×10', 'Chest opener stretch x 30s', 'Thoracic spine rotation x 10 each', 'Shoulder rolls x 20', 'Neck side stretch x 30s each'] },
+      { week: 2, focus: 'Strength & Stability', exercises: ['Wall angels x 3×10', 'Band pull-aparts x 3×15', 'Prone Y-T-W x 3×8', 'Serratus anterior push-ups x 3×10', 'Deep neck flexors x 3×10'] },
+      { week: 3, focus: 'Integration & Habits', exercises: ['Overhead reach with band x 3×12', 'Thoracic extension over foam roller x 2 min', 'Standing posture holds x 5 min', 'Ergonomic breaks every hour', 'Full routine x daily'] },
     ]
   },
   {
@@ -68,10 +68,10 @@ const PROTOCOLS = [
     color: 'from-slate-500 to-slate-700',
     description: 'Designed for office workers spending 8+ hours at a desk. Targets neck, shoulder, wrist, and lower back pain from prolonged sitting.',
     weeks: [
-      { week: 1, focus: 'Awareness & Mobility Breaks', exercises: ['Hourly neck rolls × 5 each direction', 'Chest opener doorway stretch × 30s', 'Wrist circles × 20 each', 'Seated spinal twist × 30s each', 'Stand and walk every 45 min'] },
-      { week: 2, focus: 'Posture Correction', exercises: ['Chin tucks × 3×12', 'Shoulder blade squeezes × 3×15', 'Seated hip flexor stretch × 30s each', 'Band pull-aparts × 3×15', 'Standing desk alternation × 30 min/day'] },
-      { week: 3, focus: 'Strengthening', exercises: ['Wall angels × 3×10', 'Resistance band rows × 3×15', 'Glute bridges × 3×15', 'Dead bug × 3×10', 'Lunchtime walk × 20 min'] },
-      { week: 4, focus: 'Habit Integration', exercises: ['Full morning mobility routine × 10 min', 'Ergonomic workstation audit', 'Pomodoro movement breaks × every 25 min', 'Evening yoga flow × 15 min', 'Maintain all posture habits'] },
+      { week: 1, focus: 'Awareness & Mobility Breaks', exercises: ['Hourly neck rolls x 5 each direction', 'Chest opener doorway stretch x 30s', 'Wrist circles x 20 each', 'Seated spinal twist x 30s each', 'Stand and walk every 45 min'] },
+      { week: 2, focus: 'Posture Correction', exercises: ['Chin tucks x 3×12', 'Shoulder blade squeezes x 3×15', 'Seated hip flexor stretch x 30s each', 'Band pull-aparts x 3×15', 'Standing desk alternation x 30 min/day'] },
+      { week: 3, focus: 'Strengthening', exercises: ['Wall angels x 3×10', 'Resistance band rows x 3×15', 'Glute bridges x 3×15', 'Dead bug x 3×10', 'Lunchtime walk x 20 min'] },
+      { week: 4, focus: 'Habit Integration', exercises: ['Full morning mobility routine x 10 min', 'Ergonomic workstation audit', 'Pomodoro movement breaks x every 25 min', 'Evening yoga flow x 15 min', 'Maintain all posture habits'] },
     ]
   },
   {
@@ -85,9 +85,9 @@ const PROTOCOLS = [
     color: 'from-indigo-600 to-indigo-800',
     description: 'Combat digital eye strain, tension headaches, and upper neck tightness caused by long hours on screens.',
     weeks: [
-      { week: 1, focus: 'Reduce Strain', exercises: ['20-20-20 rule every 20 min', 'Palming (eye rest) × 2 min', 'Upper trapezius stretch × 30s each', 'Suboccipital release (fingers behind skull) × 1 min', 'Blue light glasses or night mode enabled'] },
-      { week: 2, focus: 'Neck Mobility', exercises: ['Chin tucks × 3×12', 'Cervical lateral flexion stretch × 30s each', 'Neck rotation × 10 each side', 'Levator scapulae stretch × 30s each', 'Scalene stretch × 30s each'] },
-      { week: 3, focus: 'Prevention Protocol', exercises: ['Morning neck routine × 5 min', 'Eye focus drills (near-far alternation) × 2 min', 'Shoulder shrugs and drops × 3×15', 'Upper back foam rolling × 3 min', 'Evening screen cut-off 1 hour before bed'] },
+      { week: 1, focus: 'Reduce Strain', exercises: ['20-20-20 rule every 20 min', 'Palming (eye rest) x 2 min', 'Upper trapezius stretch x 30s each', 'Suboccipital release (fingers behind skull) x 1 min', 'Blue light glasses or night mode enabled'] },
+      { week: 2, focus: 'Neck Mobility', exercises: ['Chin tucks x 3×12', 'Cervical lateral flexion stretch x 30s each', 'Neck rotation x 10 each side', 'Levator scapulae stretch x 30s each', 'Scalene stretch x 30s each'] },
+      { week: 3, focus: 'Prevention Protocol', exercises: ['Morning neck routine x 5 min', 'Eye focus drills (near-far alternation) x 2 min', 'Shoulder shrugs and drops x 3×15', 'Upper back foam rolling x 3 min', 'Evening screen cut-off 1 hour before bed'] },
     ]
   },
   {
@@ -101,10 +101,10 @@ const PROTOCOLS = [
     color: 'from-cyan-600 to-cyan-800',
     description: 'For typists, developers, and data entry workers with repetitive strain injury, carpal tunnel symptoms, or wrist pain.',
     weeks: [
-      { week: 1, focus: 'Rest & Gentle Mobility', exercises: ['Wrist circles × 20 each direction', 'Finger extensions and spreads × 20', 'Prayer stretch × 30s', 'Reverse prayer stretch × 30s', 'Ice wrist post-work × 10 min'] },
-      { week: 2, focus: 'Nerve Gliding & Strengthening', exercises: ['Median nerve glides × 10 each', 'Ulnar nerve glides × 10 each', 'Putty or stress ball squeezes × 3×20', 'Wrist extension stretch × 30s each', 'Typing ergonomics assessment'] },
-      { week: 3, focus: 'Strengthening', exercises: ['Wrist curls (light) × 3×15', 'Wrist extensions (light) × 3×15', 'Forearm pronation/supination × 3×15', 'Grip strengthener × 3×20', 'Keyboard shortcut training to reduce mouse use'] },
-      { week: 4, focus: 'Prevention & Return', exercises: ['Full wrist warm-up before work × 5 min', 'Micro-break every 30 min of typing', 'Ergonomic keyboard/mouse review', 'Forearm stretching post-work × 5 min', 'Maintain all exercises 3x/week'] },
+      { week: 1, focus: 'Rest & Gentle Mobility', exercises: ['Wrist circles x 20 each direction', 'Finger extensions and spreads x 20', 'Prayer stretch x 30s', 'Reverse prayer stretch x 30s', 'Ice wrist post-work x 10 min'] },
+      { week: 2, focus: 'Nerve Gliding & Strengthening', exercises: ['Median nerve glides x 10 each', 'Ulnar nerve glides x 10 each', 'Putty or stress ball squeezes x 3×20', 'Wrist extension stretch x 30s each', 'Typing ergonomics assessment'] },
+      { week: 3, focus: 'Strengthening', exercises: ['Wrist curls (light) x 3×15', 'Wrist extensions (light) x 3×15', 'Forearm pronation/supination x 3×15', 'Grip strengthener x 3×20', 'Keyboard shortcut training to reduce mouse use'] },
+      { week: 4, focus: 'Prevention & Return', exercises: ['Full wrist warm-up before work x 5 min', 'Micro-break every 30 min of typing', 'Ergonomic keyboard/mouse review', 'Forearm stretching post-work x 5 min', 'Maintain all exercises 3x/week'] },
     ]
   },
   {
@@ -118,12 +118,12 @@ const PROTOCOLS = [
     color: 'from-red-600 to-red-800',
     description: 'Safe introduction to gym training with proper movement patterns. Builds strength, mobility, and confidence for first-time gym goers.',
     weeks: [
-      { week: 1, focus: 'Movement Patterns & Form', exercises: ['Goblet squat × 3×10 (light)', 'Dumbbell Romanian deadlift × 3×10', 'Push-ups (modified) × 3×8', 'Seated cable row × 3×10', 'Plank hold × 3×20s'] },
-      { week: 2, focus: 'Building Confidence', exercises: ['Leg press × 3×12', 'Lat pulldown × 3×10', 'Dumbbell chest press × 3×10', 'Dumbbell shoulder press × 3×10', 'Cable crunch × 3×15'] },
-      { week: 3, focus: 'Progressive Overload', exercises: ['Barbell squat (light) × 3×8', 'Dumbbell deadlift × 3×10', 'Incline push-ups × 3×12', 'One-arm dumbbell row × 3×10 each', 'Side plank × 3×20s each'] },
-      { week: 4, focus: 'Full Body Strength', exercises: ['Barbell squat × 4×8', 'Barbell deadlift (light) × 3×6', 'Bench press × 4×8', 'Bent-over row × 4×8', 'Core circuit × 3 rounds'] },
-      { week: 5, focus: 'Hypertrophy Phase', exercises: ['Split squats × 3×12 each', 'Single-leg press × 3×12', 'Cable fly × 3×15', 'Seated row × 4×12', 'Overhead press × 4×10'] },
-      { week: 6, focus: 'Testing & Next Steps', exercises: ['Max rep push-up test', 'Squat form assessment', 'Deadlift technique check', 'Full body circuit × 3 rounds', 'Design 12-week program'] },
+      { week: 1, focus: 'Movement Patterns & Form', exercises: ['Goblet squat x 3×10 (light)', 'Dumbbell Romanian deadlift x 3×10', 'Push-ups (modified) x 3×8', 'Seated cable row x 3×10', 'Plank hold x 3×20s'] },
+      { week: 2, focus: 'Building Confidence', exercises: ['Leg press x 3×12', 'Lat pulldown x 3×10', 'Dumbbell chest press x 3×10', 'Dumbbell shoulder press x 3×10', 'Cable crunch x 3×15'] },
+      { week: 3, focus: 'Progressive Overload', exercises: ['Barbell squat (light) x 3×8', 'Dumbbell deadlift x 3×10', 'Incline push-ups x 3×12', 'One-arm dumbbell row x 3×10 each', 'Side plank x 3×20s each'] },
+      { week: 4, focus: 'Full Body Strength', exercises: ['Barbell squat x 4×8', 'Barbell deadlift (light) x 3×6', 'Bench press x 4×8', 'Bent-over row x 4×8', 'Core circuit x 3 rounds'] },
+      { week: 5, focus: 'Hypertrophy Phase', exercises: ['Split squats x 3×12 each', 'Single-leg press x 3×12', 'Cable fly x 3×15', 'Seated row x 4×12', 'Overhead press x 4×10'] },
+      { week: 6, focus: 'Testing & Next Steps', exercises: ['Max rep push-up test', 'Squat form assessment', 'Deadlift technique check', 'Full body circuit x 3 rounds', 'Design 12-week program'] },
     ]
   },
   {
@@ -137,10 +137,10 @@ const PROTOCOLS = [
     color: 'from-amber-600 to-amber-800',
     description: 'For gym goers recovering from muscle strains, overuse injuries, or training burnout. Maintain fitness while healing safely.',
     weeks: [
-      { week: 1, focus: 'Active Rest', exercises: ['Swimming or pool walking × 30 min', 'Unaffected body parts only', 'Foam rolling × 10 min full body', 'Light yoga × 20 min', 'Sleep 8+ hours prioritised'] },
-      { week: 2, focus: 'Controlled Movement', exercises: ['Bodyweight squats × 3×15', 'Push-ups × 3×10', 'Resistance band work only on injury site', 'Core stability work × 20 min', 'Stretching × 15 min post session'] },
-      { week: 3, focus: 'Gradual Load', exercises: ['Light dumbbell work (50% usual weight) × 3×12', 'Cable exercises for injured area × 3×15', 'Full body mobility circuit', 'Cardio (no impact if lower body injury) × 20 min', 'Contrast therapy (hot/cold) × 10 min'] },
-      { week: 4, focus: 'Return to Training', exercises: ['75% of normal training weight', 'Full session with modified exercises', 'Deload protocol going forward', 'Injury prevention warm-up × 10 min', 'Assessment with trainer or physio'] },
+      { week: 1, focus: 'Active Rest', exercises: ['Swimming or pool walking x 30 min', 'Unaffected body parts only', 'Foam rolling x 10 min full body', 'Light yoga x 20 min', 'Sleep 8+ hours prioritised'] },
+      { week: 2, focus: 'Controlled Movement', exercises: ['Bodyweight squats x 3×15', 'Push-ups x 3×10', 'Resistance band work only on injury site', 'Core stability work x 20 min', 'Stretching x 15 min post session'] },
+      { week: 3, focus: 'Gradual Load', exercises: ['Light dumbbell work (50% usual weight) x 3×12', 'Cable exercises for injured area x 3×15', 'Full body mobility circuit', 'Cardio (no impact if lower body injury) x 20 min', 'Contrast therapy (hot/cold) x 10 min'] },
+      { week: 4, focus: 'Return to Training', exercises: ['75% of normal training weight', 'Full session with modified exercises', 'Deload protocol going forward', 'Injury prevention warm-up x 10 min', 'Assessment with trainer or physio'] },
     ]
   },
   {
@@ -154,10 +154,10 @@ const PROTOCOLS = [
     color: 'from-teal-600 to-teal-800',
     description: 'For gym goers who neglect stretching. Improves range of motion, reduces injury risk, and enhances performance.',
     weeks: [
-      { week: 1, focus: 'Baseline Flexibility', exercises: ['Hip flexor stretch × 60s each', 'Hamstring stretch × 60s each', 'Thoracic rotation × 10 each', 'Calf stretch × 60s each', 'Overhead tricep stretch × 30s each'] },
-      { week: 2, focus: 'Dynamic Mobility', exercises: ['Leg swings × 20 each direction', 'Arm circles × 20 each direction', 'Hip circles × 15 each', 'Inchworm × 10', 'World's greatest stretch × 5 each'] },
-      { week: 3, focus: 'Deep Flexibility', exercises: ['Pigeon pose × 90s each side', 'Couch stretch × 60s each', 'Pancake stretch × 2 min', 'Doorway pec stretch × 60s each', 'Shoulder dislocates with band × 15'] },
-      { week: 4, focus: 'Integration', exercises: ['Full mobility warm-up before every session × 10 min', 'Post-workout stretch routine × 15 min', 'Foam rolling × 10 min', 'Yoga flow × 20 min', 'Maintain 3x/week going forward'] },
+      { week: 1, focus: 'Baseline Flexibility', exercises: ['Hip flexor stretch x 60s each', 'Hamstring stretch x 60s each', 'Thoracic rotation x 10 each', 'Calf stretch x 60s each', 'Overhead tricep stretch x 30s each'] },
+      { week: 2, focus: 'Dynamic Mobility', exercises: ['Leg swings x 20 each direction', 'Arm circles x 20 each direction', 'Hip circles x 15 each', 'Inchworm x 10', 'World's greatest stretch x 5 each'] },
+      { week: 3, focus: 'Deep Flexibility', exercises: ['Pigeon pose x 90s each side', 'Couch stretch x 60s each', 'Pancake stretch x 2 min', 'Doorway pec stretch x 60s each', 'Shoulder dislocates with band x 15'] },
+      { week: 4, focus: 'Integration', exercises: ['Full mobility warm-up before every session x 10 min', 'Post-workout stretch routine x 15 min', 'Foam rolling x 10 min', 'Yoga flow x 20 min', 'Maintain 3x/week going forward'] },
     ]
   },
   {
@@ -171,12 +171,12 @@ const PROTOCOLS = [
     color: 'from-orange-600 to-orange-800',
     description: 'Rotator cuff strengthening and shoulder mobility restoration for sports or daily function.',
     weeks: [
-      { week: 1, focus: 'Pain Control & ROM', exercises: ['Pendulum swings × 2×20', 'Codman circles × 2 min', 'Passive external rotation × 30s', 'Scapular retraction × 3×15', 'Ice post-exercise × 15 min'] },
-      { week: 2, focus: 'Rotator Cuff Activation', exercises: ['Internal rotation (band) × 3×15', 'External rotation (band) × 3×15', 'Side-lying ER × 3×12', 'Scapular push-ups × 3×10', 'Wall slides × 3×10'] },
-      { week: 3, focus: 'Strength Phase 1', exercises: ['Front raises × 3×12', 'Lateral raises × 3×12', 'Bent-over rows × 3×12', 'Face pulls × 3×15', 'Cable ER at 90° × 3×12'] },
-      { week: 4, focus: 'Strength Phase 2', exercises: ['Overhead press (light) × 3×10', 'Arnold press × 3×10', 'Single-arm row × 3×12', 'Prone T raises × 3×10', 'Sleeper stretch × 30s'] },
-      { week: 5, focus: 'Power', exercises: ['Medicine ball chest pass × 3×10', 'Plyometric push-ups × 3×8', 'Cable diagonal patterns × 3×12', 'Overhead carry × 3×20m', 'Rotational exercises × 3×12'] },
-      { week: 6, focus: 'Return to Sport', exercises: ['Sport-specific throws/swings × 3 sets', 'Full shoulder circuit × 1 round', 'Functional movement screen', 'Maintenance program design', 'Return to full activity'] },
+      { week: 1, focus: 'Pain Control & ROM', exercises: ['Pendulum swings x 2×20', 'Codman circles x 2 min', 'Passive external rotation x 30s', 'Scapular retraction x 3×15', 'Ice post-exercise x 15 min'] },
+      { week: 2, focus: 'Rotator Cuff Activation', exercises: ['Internal rotation (band) x 3×15', 'External rotation (band) x 3×15', 'Side-lying ER x 3×12', 'Scapular push-ups x 3×10', 'Wall slides x 3×10'] },
+      { week: 3, focus: 'Strength Phase 1', exercises: ['Front raises x 3×12', 'Lateral raises x 3×12', 'Bent-over rows x 3×12', 'Face pulls x 3×15', 'Cable ER at 90° x 3×12'] },
+      { week: 4, focus: 'Strength Phase 2', exercises: ['Overhead press (light) x 3×10', 'Arnold press x 3×10', 'Single-arm row x 3×12', 'Prone T raises x 3×10', 'Sleeper stretch x 30s'] },
+      { week: 5, focus: 'Power', exercises: ['Medicine ball chest pass x 3×10', 'Plyometric push-ups x 3×8', 'Cable diagonal patterns x 3×12', 'Overhead carry x 3×20m', 'Rotational exercises x 3×12'] },
+      { week: 6, focus: 'Return to Sport', exercises: ['Sport-specific throws/swings x 3 sets', 'Full shoulder circuit x 1 round', 'Functional movement screen', 'Maintenance program design', 'Return to full activity'] },
     ]
   },
 ]
