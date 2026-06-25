@@ -5,6 +5,8 @@ import Results from './Results'
 import Login from './Login'
 import Signup from './Signup'
 import Onboarding from './Onboarding'
+import Journal from './Journal'
+import Protocols from './Protocols'
 import ProtectedRoute from './ProtectedRoute'
 import './App.css'
 
@@ -54,10 +56,10 @@ function Landing() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { icon: '🤖', title: 'AI Assessment', desc: 'Answer a detailed questionnaire across 8 specialties. Our AI analyses your responses and generates a personalised physiotherapy report.' },
-            { icon: '🏋️', title: 'Exercise Programs', desc: 'Get a tailored daily exercise plan with sets, reps, and guidance based on your specific condition and goals.' },
-            { icon: '📊', title: 'Progress Tracking', desc: 'Monitor your streak, XP, water intake, and recovery percentage — all in one clean dashboard.' },
+            { icon: '🗓️', title: 'Recovery Protocols', desc: 'Pre-built 4-6 week programs for back pain, knee rehab, posture correction, and shoulder recovery.' },
+            { icon: '📓', title: 'Pain Journal', desc: 'Track your daily pain levels, mood, location, and notes to monitor trends and share with your physiotherapist.' },
+            { icon: '📊', title: 'Progress Tracking', desc: 'Monitor your streak, XP, water intake, exercise history calendar, and weekly reports.' },
             { icon: '🦴', title: '8 Specialties', desc: 'Orthopedic, Sports, Geriatric, OB/GYN, Cardio-Respiratory, Neurological, Ergonomic, and Pediatric.' },
-            { icon: '🚨', title: 'Red Flag Detection', desc: 'The AI flags symptoms that need urgent medical attention, keeping your safety first.' },
             { icon: '📋', title: 'Medical Profile', desc: 'Build your complete health history including BMI, injury history, chronic conditions, and lifestyle factors.' },
           ].map((f) => (
             <div key={f.title} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-teal-800 transition-colors">
@@ -95,6 +97,8 @@ function App() {
       <Route path="/results" element={<ProtectedRoute><Results /></ProtectedRoute>} />
       <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><Onboarding isEditMode={true} /></ProtectedRoute>} />
+      <Route path="/journal" element={<ProtectedRoute><Journal /></ProtectedRoute>} />
+      <Route path="/protocols" element={<ProtectedRoute><Protocols /></ProtectedRoute>} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
     </Routes>
