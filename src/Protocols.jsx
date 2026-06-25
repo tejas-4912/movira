@@ -155,7 +155,7 @@ const PROTOCOLS = [
     description: 'For gym goers who neglect stretching. Improves range of motion, reduces injury risk, and enhances performance.',
     weeks: [
       { week: 1, focus: 'Baseline Flexibility', exercises: ['Hip flexor stretch x 60s each', 'Hamstring stretch x 60s each', 'Thoracic rotation x 10 each', 'Calf stretch x 60s each', 'Overhead tricep stretch x 30s each'] },
-      { week: 2, focus: 'Dynamic Mobility', exercises: ['Leg swings x 20 each direction', 'Arm circles x 20 each direction', 'Hip circles x 15 each', 'Inchworm x 10', 'World's greatest stretch x 5 each'] },
+      { week: 2, focus: 'Dynamic Mobility', exercises: ['Leg swings x 20 each direction', 'Arm circles x 20 each direction', 'Hip circles x 15 each', 'Inchworm x 10', 'World greatest stretch x 5 each'] },
       { week: 3, focus: 'Deep Flexibility', exercises: ['Pigeon pose x 90s each side', 'Couch stretch x 60s each', 'Pancake stretch x 2 min', 'Doorway pec stretch x 60s each', 'Shoulder dislocates with band x 15'] },
       { week: 4, focus: 'Integration', exercises: ['Full mobility warm-up before every session x 10 min', 'Post-workout stretch routine x 15 min', 'Foam rolling x 10 min', 'Yoga flow x 20 min', 'Maintain 3x/week going forward'] },
     ]
