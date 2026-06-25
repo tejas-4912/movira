@@ -58,6 +58,109 @@ const PROTOCOLS = [
     ]
   },
   {
+    id: 'desk-warrior-4w',
+    title: '4-Week Desk Warrior Reset',
+    icon: '💼',
+    category: 'Corporate',
+    difficulty: 'Beginner',
+    duration: '4 weeks',
+    sessionsPerWeek: 5,
+    color: 'from-slate-500 to-slate-700',
+    description: 'Designed for office workers spending 8+ hours at a desk. Targets neck, shoulder, wrist, and lower back pain from prolonged sitting.',
+    weeks: [
+      { week: 1, focus: 'Awareness & Mobility Breaks', exercises: ['Hourly neck rolls × 5 each direction', 'Chest opener doorway stretch × 30s', 'Wrist circles × 20 each', 'Seated spinal twist × 30s each', 'Stand and walk every 45 min'] },
+      { week: 2, focus: 'Posture Correction', exercises: ['Chin tucks × 3×12', 'Shoulder blade squeezes × 3×15', 'Seated hip flexor stretch × 30s each', 'Band pull-aparts × 3×15', 'Standing desk alternation × 30 min/day'] },
+      { week: 3, focus: 'Strengthening', exercises: ['Wall angels × 3×10', 'Resistance band rows × 3×15', 'Glute bridges × 3×15', 'Dead bug × 3×10', 'Lunchtime walk × 20 min'] },
+      { week: 4, focus: 'Habit Integration', exercises: ['Full morning mobility routine × 10 min', 'Ergonomic workstation audit', 'Pomodoro movement breaks × every 25 min', 'Evening yoga flow × 15 min', 'Maintain all posture habits'] },
+    ]
+  },
+  {
+    id: 'eye-neck-strain-3w',
+    title: '3-Week Screen Fatigue Relief',
+    icon: '👁️',
+    category: 'Corporate',
+    difficulty: 'Beginner',
+    duration: '3 weeks',
+    sessionsPerWeek: 6,
+    color: 'from-indigo-600 to-indigo-800',
+    description: 'Combat digital eye strain, tension headaches, and upper neck tightness caused by long hours on screens.',
+    weeks: [
+      { week: 1, focus: 'Reduce Strain', exercises: ['20-20-20 rule every 20 min', 'Palming (eye rest) × 2 min', 'Upper trapezius stretch × 30s each', 'Suboccipital release (fingers behind skull) × 1 min', 'Blue light glasses or night mode enabled'] },
+      { week: 2, focus: 'Neck Mobility', exercises: ['Chin tucks × 3×12', 'Cervical lateral flexion stretch × 30s each', 'Neck rotation × 10 each side', 'Levator scapulae stretch × 30s each', 'Scalene stretch × 30s each'] },
+      { week: 3, focus: 'Prevention Protocol', exercises: ['Morning neck routine × 5 min', 'Eye focus drills (near-far alternation) × 2 min', 'Shoulder shrugs and drops × 3×15', 'Upper back foam rolling × 3 min', 'Evening screen cut-off 1 hour before bed'] },
+    ]
+  },
+  {
+    id: 'wrist-rsi-4w',
+    title: '4-Week RSI & Wrist Recovery',
+    icon: '⌨️',
+    category: 'Corporate',
+    difficulty: 'Beginner',
+    duration: '4 weeks',
+    sessionsPerWeek: 5,
+    color: 'from-cyan-600 to-cyan-800',
+    description: 'For typists, developers, and data entry workers with repetitive strain injury, carpal tunnel symptoms, or wrist pain.',
+    weeks: [
+      { week: 1, focus: 'Rest & Gentle Mobility', exercises: ['Wrist circles × 20 each direction', 'Finger extensions and spreads × 20', 'Prayer stretch × 30s', 'Reverse prayer stretch × 30s', 'Ice wrist post-work × 10 min'] },
+      { week: 2, focus: 'Nerve Gliding & Strengthening', exercises: ['Median nerve glides × 10 each', 'Ulnar nerve glides × 10 each', 'Putty or stress ball squeezes × 3×20', 'Wrist extension stretch × 30s each', 'Typing ergonomics assessment'] },
+      { week: 3, focus: 'Strengthening', exercises: ['Wrist curls (light) × 3×15', 'Wrist extensions (light) × 3×15', 'Forearm pronation/supination × 3×15', 'Grip strengthener × 3×20', 'Keyboard shortcut training to reduce mouse use'] },
+      { week: 4, focus: 'Prevention & Return', exercises: ['Full wrist warm-up before work × 5 min', 'Micro-break every 30 min of typing', 'Ergonomic keyboard/mouse review', 'Forearm stretching post-work × 5 min', 'Maintain all exercises 3x/week'] },
+    ]
+  },
+  {
+    id: 'gym-beginner-6w',
+    title: '6-Week Gym Starter Program',
+    icon: '🏋️',
+    category: 'Gym',
+    difficulty: 'Beginner',
+    duration: '6 weeks',
+    sessionsPerWeek: 3,
+    color: 'from-red-600 to-red-800',
+    description: 'Safe introduction to gym training with proper movement patterns. Builds strength, mobility, and confidence for first-time gym goers.',
+    weeks: [
+      { week: 1, focus: 'Movement Patterns & Form', exercises: ['Goblet squat × 3×10 (light)', 'Dumbbell Romanian deadlift × 3×10', 'Push-ups (modified) × 3×8', 'Seated cable row × 3×10', 'Plank hold × 3×20s'] },
+      { week: 2, focus: 'Building Confidence', exercises: ['Leg press × 3×12', 'Lat pulldown × 3×10', 'Dumbbell chest press × 3×10', 'Dumbbell shoulder press × 3×10', 'Cable crunch × 3×15'] },
+      { week: 3, focus: 'Progressive Overload', exercises: ['Barbell squat (light) × 3×8', 'Dumbbell deadlift × 3×10', 'Incline push-ups × 3×12', 'One-arm dumbbell row × 3×10 each', 'Side plank × 3×20s each'] },
+      { week: 4, focus: 'Full Body Strength', exercises: ['Barbell squat × 4×8', 'Barbell deadlift (light) × 3×6', 'Bench press × 4×8', 'Bent-over row × 4×8', 'Core circuit × 3 rounds'] },
+      { week: 5, focus: 'Hypertrophy Phase', exercises: ['Split squats × 3×12 each', 'Single-leg press × 3×12', 'Cable fly × 3×15', 'Seated row × 4×12', 'Overhead press × 4×10'] },
+      { week: 6, focus: 'Testing & Next Steps', exercises: ['Max rep push-up test', 'Squat form assessment', 'Deadlift technique check', 'Full body circuit × 3 rounds', 'Design 12-week program'] },
+    ]
+  },
+  {
+    id: 'gym-muscle-recovery-4w',
+    title: '4-Week Gym Injury Recovery',
+    icon: '🩹',
+    category: 'Gym',
+    difficulty: 'Intermediate',
+    duration: '4 weeks',
+    sessionsPerWeek: 4,
+    color: 'from-amber-600 to-amber-800',
+    description: 'For gym goers recovering from muscle strains, overuse injuries, or training burnout. Maintain fitness while healing safely.',
+    weeks: [
+      { week: 1, focus: 'Active Rest', exercises: ['Swimming or pool walking × 30 min', 'Unaffected body parts only', 'Foam rolling × 10 min full body', 'Light yoga × 20 min', 'Sleep 8+ hours prioritised'] },
+      { week: 2, focus: 'Controlled Movement', exercises: ['Bodyweight squats × 3×15', 'Push-ups × 3×10', 'Resistance band work only on injury site', 'Core stability work × 20 min', 'Stretching × 15 min post session'] },
+      { week: 3, focus: 'Gradual Load', exercises: ['Light dumbbell work (50% usual weight) × 3×12', 'Cable exercises for injured area × 3×15', 'Full body mobility circuit', 'Cardio (no impact if lower body injury) × 20 min', 'Contrast therapy (hot/cold) × 10 min'] },
+      { week: 4, focus: 'Return to Training', exercises: ['75% of normal training weight', 'Full session with modified exercises', 'Deload protocol going forward', 'Injury prevention warm-up × 10 min', 'Assessment with trainer or physio'] },
+    ]
+  },
+  {
+    id: 'gym-flexibility-4w',
+    title: '4-Week Flexibility & Mobility',
+    icon: '🧘',
+    category: 'Gym',
+    difficulty: 'Beginner',
+    duration: '4 weeks',
+    sessionsPerWeek: 5,
+    color: 'from-teal-600 to-teal-800',
+    description: 'For gym goers who neglect stretching. Improves range of motion, reduces injury risk, and enhances performance.',
+    weeks: [
+      { week: 1, focus: 'Baseline Flexibility', exercises: ['Hip flexor stretch × 60s each', 'Hamstring stretch × 60s each', 'Thoracic rotation × 10 each', 'Calf stretch × 60s each', 'Overhead tricep stretch × 30s each'] },
+      { week: 2, focus: 'Dynamic Mobility', exercises: ['Leg swings × 20 each direction', 'Arm circles × 20 each direction', 'Hip circles × 15 each', 'Inchworm × 10', 'World's greatest stretch × 5 each'] },
+      { week: 3, focus: 'Deep Flexibility', exercises: ['Pigeon pose × 90s each side', 'Couch stretch × 60s each', 'Pancake stretch × 2 min', 'Doorway pec stretch × 60s each', 'Shoulder dislocates with band × 15'] },
+      { week: 4, focus: 'Integration', exercises: ['Full mobility warm-up before every session × 10 min', 'Post-workout stretch routine × 15 min', 'Foam rolling × 10 min', 'Yoga flow × 20 min', 'Maintain 3x/week going forward'] },
+    ]
+  },
+  {
     id: 'shoulder-6w',
     title: '6-Week Shoulder Recovery',
     icon: '💪',
@@ -85,6 +188,7 @@ export default function Protocols() {
   const [activeProtocol, setActiveProtocol] = useState(null)
   const [selectedProtocol, setSelectedProtocol] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [filter, setFilter] = useState('All')
 
   useEffect(() => {
     const load = async () => {
@@ -216,9 +320,19 @@ export default function Protocols() {
           </div>
         )}
 
+        {/* Category filter */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {['All', 'Orthopedic', 'Corporate', 'Gym', 'Sports', 'Ergonomic'].map(cat => (
+            <button key={cat} onClick={() => setFilter(cat)}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${filter === cat ? 'bg-teal-500 border-teal-500 text-white' : 'border-slate-700 text-slate-400 hover:border-slate-500'}`}>
+              {cat}
+            </button>
+          ))}
+        </div>
+
         {/* Protocol list */}
         <div className="grid sm:grid-cols-2 gap-5">
-          {PROTOCOLS.map(p => {
+          {PROTOCOLS.filter(p => filter === 'All' || p.category === filter).map(p => {
             const isActive = activeProtocol?.protocolId === p.id
             return (
               <div key={p.id} className="bg-slate-900 border border-slate-800 hover:border-slate-600 rounded-2xl p-5 transition-colors">
