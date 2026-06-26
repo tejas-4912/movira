@@ -25,25 +25,34 @@ export default function ChatAssistant() {
   }, [messages, open])
 
   const send = async (text) => {
-    const msg = text || input.trim()
-    if (!msg) return
-    setInput('')
-    setMessages(prev => [...prev, { role: 'user', text: msg }])
-    setLoading(true)
+  const msg = text || input.trim()
+  if (!msg) return
+  setInput('')
+  setMessages(prev => [...prev, { role: 'user', text: msg }])
+  setLoading(true)
 
-    try {
-      const response = await fetch(`${API}/api/ai/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ message: msg }),
-      })
-      const data = await response.json()
-      setMessages(prev => [...prev, { role: 'assistant', text: data.reply || 'Sorry, I could not answer that.' }])
-    } catch {
+  try {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 90000)
+    
+    const response = await fetch(`${API}/api/ai/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ message: msg }),
+      signal: controller.signal,
+    })
+    clearTimeout(timeout)
+    const data = await response.json()
+    setMessages(prev => [...prev, { role: 'assistant', text: data.reply || 'Sorry, I could not answer that.' }])
+  } catch (err) {
+    if (err.name === 'AbortError') {
+      setMessages(prev => [...prev, { role: 'assistant', text: 'Server is waking up, please send your message again in 10 seconds.' }])
+    } else {
       setMessages(prev => [...prev, { role: 'assistant', text: 'Connection error. Please try again.' }])
     }
-    setLoading(false)
   }
+  setLoading(false)
+}
 
   return (
     <>
