@@ -16,7 +16,7 @@ import './App.css'
 // ── Logo component ──
 function Logo({ size = 36 }) {
   return (
-    <img src="/movira-logo.jpeg" alt="MOVIRA" style={{ height: size, width: 'auto', borderRadius: 8 }} />
+    <img src="/movira-logo.png" alt="MOVIRA" style={{ height: size, width: 'auto', borderRadius: 8 }} />
   )
 }
 
