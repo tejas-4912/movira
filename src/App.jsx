@@ -54,7 +54,7 @@ function Landing() {
     <div className="min-h-screen bg-slate-950 text-white">
       {/* Nav */}
       <nav className="flex items-center justify-between px-8 py-4 border-b border-slate-800 sticky top-0 bg-slate-950/90 backdrop-blur-sm z-40">
-        <Logo size={40} />
+        <Logo size={56} />
         <div className="hidden md:flex gap-8 text-slate-400 font-medium text-sm">
           <a href="#what" className="hover:text-teal-400 transition-colors">What is MOVIRA</a>
           <a href="#who" className="hover:text-teal-400 transition-colors">Who it's for</a>
