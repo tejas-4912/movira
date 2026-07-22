@@ -257,8 +257,8 @@ export default function Protocols() {
   const todayDone = activeProtocol?.completedDays?.includes(today)
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      <div className="fixed left-0 top-0 h-full w-56 bg-slate-900 border-r border-slate-800 flex flex-col py-6 px-4 z-10 hidden lg:flex">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
+      <div className="fixed left-0 top-0 h-full w-56 bg-white border-r border-slate-200 flex flex-col py-6 px-4 z-10 hidden lg:flex">
         <div className="flex items-center gap-2 mb-10 px-2">
           <div className="w-9 h-9 bg-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">M</div>
           <span className="text-lg font-bold">MOVIRA</span>
@@ -273,27 +273,27 @@ export default function Protocols() {
             { icon: '👤', label: 'My Profile', to: '/profile' },
           ].map(item => (
             <Link key={item.label} to={item.to}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${item.active ? 'bg-teal-500/10 text-teal-400' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}>
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${item.active ? 'bg-teal-50 text-teal-700' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'}`}>
               <span>{item.icon}</span> {item.label}
             </Link>
           ))}
         </nav>
-        <div className="border-t border-slate-800 pt-4 px-2">
-          <p className="text-sm font-semibold text-white truncate">{user.name || 'User'}</p>
-          <button onClick={handleLogout} className="mt-3 text-xs text-slate-500 hover:text-red-400 transition-colors">Sign out</button>
+        <div className="border-t border-slate-200 pt-4 px-2">
+          <p className="text-sm font-semibold text-slate-900 truncate">{user.name || 'User'}</p>
+          <button onClick={handleLogout} className="mt-3 text-xs text-slate-500 hover:text-red-500 transition-colors">Sign out</button>
         </div>
       </div>
 
       <div className="lg:ml-56 px-6 lg:px-10 py-8 max-w-5xl mx-auto">
         <div className="mb-8">
-          <p className="text-teal-400 text-xs font-semibold uppercase tracking-widest mb-1">Recovery Programs</p>
+          <p className="text-teal-600 text-xs font-semibold uppercase tracking-widest mb-1">Recovery Programs</p>
           <h1 className="text-3xl font-bold">Protocols</h1>
-          <p className="text-slate-400 text-sm mt-1">Pre-built physiotherapy programs designed by experts</p>
+          <p className="text-slate-500 text-sm mt-1">Pre-built physiotherapy programs designed by experts</p>
         </div>
 
         {/* Active protocol */}
         {activeProtocol && currentProto && (
-          <div className={`bg-gradient-to-br ${currentProto.color} rounded-2xl p-6 mb-8`}>
+          <div className={`bg-gradient-to-br ${currentProto.color} text-white rounded-2xl p-6 mb-8`}>
             <div className="flex items-start justify-between mb-4">
               <div>
                 <p className="text-white/60 text-xs uppercase tracking-widest mb-1">Currently Active</p>
@@ -324,7 +324,7 @@ export default function Protocols() {
         <div className="flex flex-wrap gap-2 mb-6">
           {['All', 'Orthopedic', 'Corporate', 'Gym', 'Sports', 'Ergonomic'].map(cat => (
             <button key={cat} onClick={() => setFilter(cat)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${filter === cat ? 'bg-teal-500 border-teal-500 text-white' : 'border-slate-700 text-slate-400 hover:border-slate-500'}`}>
+              className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${filter === cat ? 'bg-teal-500 border-teal-500 text-white' : 'border-slate-200 text-slate-500 hover:border-slate-400'}`}>
               {cat}
             </button>
           ))}
@@ -335,22 +335,22 @@ export default function Protocols() {
           {PROTOCOLS.filter(p => filter === 'All' || p.category === filter).map(p => {
             const isActive = activeProtocol?.protocolId === p.id
             return (
-              <div key={p.id} className="bg-slate-900 border border-slate-800 hover:border-slate-600 rounded-2xl p-5 transition-colors">
+              <div key={p.id} className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-5 transition-colors">
                 <div className="flex items-start justify-between mb-3">
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${p.color} flex items-center justify-center text-2xl`}>{p.icon}</div>
-                  {isActive && <span className="text-xs bg-teal-500/20 text-teal-400 border border-teal-500/30 px-2 py-1 rounded-full">Active</span>}
+                  {isActive && <span className="text-xs bg-teal-50 text-teal-700 border border-teal-200 px-2 py-1 rounded-full">Active</span>}
                 </div>
-                <h3 className="font-bold text-white mb-1">{p.title}</h3>
-                <p className="text-slate-400 text-sm mb-3 leading-relaxed">{p.description}</p>
+                <h3 className="font-bold text-slate-900 mb-1">{p.title}</h3>
+                <p className="text-slate-500 text-sm mb-3 leading-relaxed">{p.description}</p>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded-full">{p.duration}</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded-full">{p.sessionsPerWeek}x/week</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded-full">{p.difficulty}</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded-full">{p.category}</span>
+                  <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full">{p.duration}</span>
+                  <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full">{p.sessionsPerWeek}x/week</span>
+                  <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full">{p.difficulty}</span>
+                  <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full">{p.category}</span>
                 </div>
                 <div className="flex gap-2">
                   <button onClick={() => setSelectedProtocol(selectedProtocol?.id === p.id ? null : p)}
-                    className="flex-1 border border-slate-700 hover:border-slate-500 text-slate-300 py-2 rounded-xl text-sm transition-colors">
+                    className="flex-1 border border-slate-200 hover:border-slate-400 text-slate-600 py-2 rounded-xl text-sm transition-colors">
                     {selectedProtocol?.id === p.id ? 'Hide Details' : 'View Details'}
                   </button>
                   {!isActive && (
@@ -361,12 +361,12 @@ export default function Protocols() {
                   )}
                 </div>
                 {selectedProtocol?.id === p.id && (
-                  <div className="mt-4 border-t border-slate-800 pt-4 space-y-3">
+                  <div className="mt-4 border-t border-slate-200 pt-4 space-y-3">
                     {p.weeks.map(w => (
-                      <div key={w.week} className="bg-slate-800 rounded-xl p-3">
-                        <p className="text-sm font-semibold text-teal-400 mb-1">Week {w.week}: {w.focus}</p>
+                      <div key={w.week} className="bg-slate-100 rounded-xl p-3">
+                        <p className="text-sm font-semibold text-teal-600 mb-1">Week {w.week}: {w.focus}</p>
                         <ul className="space-y-0.5">
-                          {w.exercises.map((ex, i) => <li key={i} className="text-xs text-slate-400">▸ {ex}</li>)}
+                          {w.exercises.map((ex, i) => <li key={i} className="text-xs text-slate-500">▸ {ex}</li>)}
                         </ul>
                       </div>
                     ))}

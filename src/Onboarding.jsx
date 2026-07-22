@@ -37,7 +37,7 @@ function ProgressBar({ step, total }) {
         <span>Step {step + 1} of {total}</span>
         <span>{STEPS[step]}</span>
       </div>
-      <div className="w-full bg-slate-800 rounded-full h-1.5">
+      <div className="w-full bg-slate-100 rounded-full h-1.5">
         <div
           className="bg-teal-500 h-1.5 rounded-full transition-all duration-500"
           style={{ width: `${((step + 1) / total) * 100}%` }}
@@ -49,7 +49,7 @@ function ProgressBar({ step, total }) {
 
 function Label({ children, optional }) {
   return (
-    <label className="block text-sm font-medium text-slate-300 mb-1.5">
+    <label className="block text-sm font-medium text-slate-600 mb-1.5">
       {children} {optional && <span className="text-slate-500 font-normal">(optional)</span>}
     </label>
   )
@@ -59,7 +59,7 @@ function Input({ ...props }) {
   return (
     <input
       {...props}
-      className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500 transition-colors"
+      className="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-teal-500 transition-colors"
     />
   )
 }
@@ -68,7 +68,7 @@ function Select({ children, ...props }) {
   return (
     <select
       {...props}
-      className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-teal-500 transition-colors"
+      className="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:outline-none focus:border-teal-500 transition-colors"
     >
       {children}
     </select>
@@ -80,7 +80,7 @@ function Textarea({ ...props }) {
     <textarea
       {...props}
       rows={3}
-      className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500 transition-colors resize-none"
+      className="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-teal-500 transition-colors resize-none"
     />
   )
 }
@@ -104,8 +104,8 @@ function MultiSelect({ options, selected, onChange }) {
           onClick={() => toggle(opt)}
           className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${
             selected.includes(opt)
-              ? 'bg-teal-500/20 border-teal-500 text-teal-300'
-              : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-500'
+              ? 'bg-teal-500/20 border-teal-500 text-teal-700'
+              : 'bg-slate-100 border-slate-200 text-slate-500 hover:border-slate-400'
           }`}
         >
           {opt}
@@ -121,10 +121,10 @@ function BMIBadge({ bmi }) {
   if (bmi < 18.5) { label = 'Underweight'; color = 'text-blue-400' }
   else if (bmi < 25) { label = 'Normal weight'; color = 'text-green-400' }
   else if (bmi < 30) { label = 'Overweight'; color = 'text-amber-400' }
-  else { label = 'Obese'; color = 'text-red-400' }
+  else { label = 'Obese'; color = 'text-red-500' }
   return (
-    <div className="mt-3 bg-slate-800 rounded-xl p-4 flex items-center justify-between">
-      <span className="text-slate-400 text-sm">Your BMI</span>
+    <div className="mt-3 bg-slate-100 rounded-xl p-4 flex items-center justify-between">
+      <span className="text-slate-500 text-sm">Your BMI</span>
       <span className={`text-2xl font-bold ${color}`}>{bmi} <span className="text-sm font-normal">— {label}</span></span>
     </div>
   )
@@ -190,14 +190,14 @@ export default function Onboarding({ isEditMode = false }) {
   const back = () => setStep(s => s - 1)
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      <nav className="flex items-center justify-between px-8 py-5 border-b border-slate-800">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
+      <nav className="flex items-center justify-between px-8 py-5 border-b border-slate-200">
         <div className="flex items-center gap-2">
-          <div className="w-9 h-9 bg-teal-500 rounded-lg flex items-center justify-center font-bold text-lg">M</div>
+          <div className="w-9 h-9 bg-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">M</div>
           <span className="text-xl font-bold">MOVIRA</span>
         </div>
         {isEditMode && (
-          <button onClick={() => navigate('/dashboard')} className="text-slate-400 hover:text-white text-sm">← Back to Dashboard</button>
+          <button onClick={() => navigate('/dashboard')} className="text-slate-500 hover:text-slate-900 text-sm">← Back to Dashboard</button>
         )}
         {!isEditMode && (
           <span className="text-xs text-slate-500">Setting up your medical profile</span>
@@ -207,22 +207,22 @@ export default function Onboarding({ isEditMode = false }) {
       <div className="max-w-2xl mx-auto px-6 py-10">
         {!isEditMode && step === 0 && (
           <div className="mb-8">
-            <span className="text-teal-400 text-xs font-semibold uppercase tracking-widest">One-time setup</span>
+            <span className="text-teal-600 text-xs font-semibold uppercase tracking-widest">One-time setup</span>
             <h1 className="text-3xl font-bold mt-1 mb-2">Your Medical Profile</h1>
-            <p className="text-slate-400 text-sm">This information helps our AI give you a more accurate physiotherapy assessment. It takes about 3 minutes.</p>
+            <p className="text-slate-500 text-sm">This information helps our AI give you a more accurate physiotherapy assessment. It takes about 3 minutes.</p>
           </div>
         )}
         {isEditMode && (
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">Edit Medical Profile</h1>
-            <p className="text-slate-400 text-sm">Update your health information at any time.</p>
+            <p className="text-slate-500 text-sm">Update your health information at any time.</p>
           </div>
         )}
 
         <ProgressBar step={step} total={STEPS.length} />
 
         {error && (
-          <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-xl p-3 mb-6">{error}</div>
+          <div className="bg-red-500/10 border border-red-500/30 text-red-600 text-sm rounded-xl p-3 mb-6">{error}</div>
         )}
 
         {/* ── STEP 0: Personal Details ── */}
@@ -311,24 +311,24 @@ export default function Onboarding({ isEditMode = false }) {
         {/* ── STEP 3: Injury History ── */}
         {step === 3 && (
           <div className="space-y-5">
-            <p className="text-sm text-slate-400">Add any past or current injuries. You can add multiple.</p>
+            <p className="text-sm text-slate-500">Add any past or current injuries. You can add multiple.</p>
 
             {injuries.length > 0 && (
               <div className="space-y-2">
                 {injuries.map((inj, i) => (
-                  <div key={i} className="flex items-center justify-between bg-slate-800 border border-slate-700 rounded-xl px-4 py-3">
+                  <div key={i} className="flex items-center justify-between bg-slate-100 border border-slate-200 rounded-xl px-4 py-3">
                     <div>
-                      <p className="text-sm font-medium text-white">{inj.bodyPart} — {inj.severity}</p>
-                      <p className="text-xs text-slate-400">{inj.year && `Year: ${inj.year}`} {inj.details && `· ${inj.details}`}</p>
+                      <p className="text-sm font-medium text-slate-900">{inj.bodyPart} — {inj.severity}</p>
+                      <p className="text-xs text-slate-500">{inj.year && `Year: ${inj.year}`} {inj.details && `· ${inj.details}`}</p>
                     </div>
-                    <button onClick={() => removeInjury(i)} className="text-slate-500 hover:text-red-400 text-lg ml-4">×</button>
+                    <button onClick={() => removeInjury(i)} className="text-slate-500 hover:text-red-500 text-lg ml-4">×</button>
                   </div>
                 ))}
               </div>
             )}
 
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-5 space-y-4">
-              <p className="text-sm font-semibold text-slate-300">Add an injury</p>
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4">
+              <p className="text-sm font-semibold text-slate-600">Add an injury</p>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <Label>Body part</Label>
@@ -358,7 +358,7 @@ export default function Onboarding({ isEditMode = false }) {
                   <Input type="text" placeholder="e.g. ACL tear" value={newInjury.details} onChange={e => setNewInjury(n => ({ ...n, details: e.target.value }))} />
                 </div>
               </div>
-              <button onClick={addInjury} className="w-full border border-teal-600 text-teal-400 hover:bg-teal-500/10 py-2.5 rounded-xl text-sm font-medium transition-colors">
+              <button onClick={addInjury} className="w-full border border-teal-600 text-teal-700 hover:bg-teal-500/10 py-2.5 rounded-xl text-sm font-medium transition-colors">
                 + Add injury
               </button>
             </div>
@@ -366,7 +366,7 @@ export default function Onboarding({ isEditMode = false }) {
             {injuries.length === 0 && (
               <button
                 onClick={next}
-                className="text-slate-500 hover:text-slate-300 text-sm transition-colors"
+                className="text-slate-500 hover:text-slate-600 text-sm transition-colors"
               >
                 Skip — no injury history →
               </button>
@@ -414,7 +414,7 @@ export default function Onboarding({ isEditMode = false }) {
         {/* ── STEP 5: Review ── */}
         {step === 5 && (
           <div className="space-y-4">
-            <p className="text-slate-400 text-sm mb-4">Review your information before saving.</p>
+            <p className="text-slate-500 text-sm mb-4">Review your information before saving.</p>
             {[
               { label: 'Age', value: form.age },
               { label: 'Gender', value: form.gender },
@@ -433,9 +433,9 @@ export default function Onboarding({ isEditMode = false }) {
               { label: 'Allergies', value: form.allergies },
               { label: 'Surgeries', value: form.surgeryHistory },
             ].filter(r => r.value).map(row => (
-              <div key={row.label} className="flex gap-4 py-2 border-b border-slate-800">
+              <div key={row.label} className="flex gap-4 py-2 border-b border-slate-200">
                 <span className="text-slate-500 text-sm w-40 flex-shrink-0">{row.label}</span>
-                <span className="text-white text-sm">{row.value}</span>
+                <span className="text-slate-900 text-sm">{row.value}</span>
               </div>
             ))}
           </div>
@@ -444,7 +444,7 @@ export default function Onboarding({ isEditMode = false }) {
         {/* Navigation */}
         <div className="flex justify-between mt-10">
           {step > 0 ? (
-            <button onClick={back} className="text-slate-400 hover:text-white text-sm font-medium transition-colors">← Back</button>
+            <button onClick={back} className="text-slate-500 hover:text-slate-900 text-sm font-medium transition-colors">← Back</button>
           ) : (
             <div />
           )}

@@ -201,8 +201,8 @@ function Assessment() {
   // ── CATEGORY SELECTION SCREEN ──
   if (phase === 'category') {
     return (
-      <div className="min-h-screen bg-slate-950 text-white">
-        <nav className="flex items-center px-8 py-5 border-b border-slate-800">
+      <div className="min-h-screen bg-slate-50 text-slate-900">
+        <nav className="flex items-center px-8 py-5 border-b border-slate-200">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 bg-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">M</div>
             <span className="text-xl font-bold">MOVIRA</span>
@@ -210,36 +210,36 @@ function Assessment() {
         </nav>
 
         <div className="max-w-4xl mx-auto px-6 py-12">
-          <p className="text-teal-400 text-sm font-semibold uppercase tracking-widest mb-3">Step 1 of 2</p>
+          <p className="text-teal-600 text-sm font-semibold uppercase tracking-widest mb-3">Step 1 of 2</p>
           <h1 className="text-4xl font-bold mb-2">Select Assessment Category</h1>
-          <p className="text-slate-400 mb-10">Choose the category that best describes your condition to get a personalised questionnaire.</p>
+          <p className="text-slate-500 mb-10">Choose the category that best describes your condition to get a personalised questionnaire.</p>
 
           <div className="grid sm:grid-cols-2 gap-4 mb-8">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => handleCategorySelect(cat)}
-                className="flex items-center gap-4 p-5 rounded-2xl border border-slate-700 hover:border-teal-500 bg-slate-900 hover:bg-slate-800 transition-all text-left group"
+                className="flex items-center gap-4 p-5 rounded-2xl border border-slate-200 hover:border-teal-500 bg-white hover:bg-slate-100 transition-all text-left group"
               >
                 <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${cat.color} flex items-center justify-center text-2xl flex-shrink-0`}>
                   {cat.icon}
                 </div>
                 <div>
-                  <p className="font-semibold text-white group-hover:text-teal-400 transition-colors">{cat.label}</p>
-                  <p className="text-sm text-slate-400">{cat.description}</p>
+                  <p className="font-semibold text-slate-900 group-hover:text-teal-700 transition-colors">{cat.label}</p>
+                  <p className="text-sm text-slate-500">{cat.description}</p>
                 </div>
               </button>
             ))}
           </div>
 
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6">
-            <label className="block text-sm font-medium text-slate-300 mb-2">Chief Complaint <span className="text-slate-500">(optional – describe in your own words)</span></label>
+          <div className="bg-white border border-slate-200 rounded-2xl p-6">
+            <label className="block text-sm font-medium text-slate-600 mb-2">Chief Complaint <span className="text-slate-500">(optional – describe in your own words)</span></label>
             <input
               type="text"
               value={chiefComplaint}
               onChange={(e) => setChiefComplaint(e.target.value)}
               placeholder="e.g. Low back pain for 3 weeks after lifting at the gym"
-              className="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500 transition-colors"
+              className="w-full bg-slate-100 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-teal-500 transition-colors"
             />
           </div>
         </div>
@@ -250,10 +250,10 @@ function Assessment() {
   // ── LOADING SCREEN ──
   if (phase === 'loading') {
     return (
-      <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center gap-6">
+      <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col items-center justify-center gap-6">
         <div className="w-16 h-16 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
         <h2 className="text-2xl font-bold">Analysing your responses…</h2>
-        <p className="text-slate-400">Our AI physiotherapist is reviewing your assessment</p>
+        <p className="text-slate-500">Our AI physiotherapist is reviewing your assessment</p>
       </div>
     )
   }
@@ -263,17 +263,17 @@ function Assessment() {
   const isCommon = currentStep >= (questionsByCategory[selectedCategory?.id]?.length || 0)
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      <nav className="flex items-center justify-between px-8 py-5 border-b border-slate-800">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
+      <nav className="flex items-center justify-between px-8 py-5 border-b border-slate-200">
         <div className="flex items-center gap-2">
           <div className="w-9 h-9 bg-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">M</div>
           <span className="text-xl font-bold">MOVIRA</span>
         </div>
-        <button onClick={() => setPhase('category')} className="text-slate-400 hover:text-white text-sm">← Change category</button>
+        <button onClick={() => setPhase('category')} className="text-slate-500 hover:text-slate-900 text-sm">← Change category</button>
       </nav>
 
       {/* Progress bar */}
-      <div className="h-1 bg-slate-800">
+      <div className="h-1 bg-slate-100">
         <div className="h-1 bg-teal-500 transition-all duration-500" style={{ width: `${progress}%` }}></div>
       </div>
 
@@ -285,18 +285,18 @@ function Assessment() {
           </div>
           <div>
             <p className="text-xs text-slate-500 uppercase tracking-widest">{isCommon ? 'General Questions' : selectedCategory.label}</p>
-            <p className="text-sm text-slate-300 font-medium">Question {currentStep + 1} of {totalSteps}</p>
+            <p className="text-sm text-slate-600 font-medium">Question {currentStep + 1} of {totalSteps}</p>
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold text-white mb-8">{currentQ.question}</h2>
+        <h2 className="text-2xl font-bold text-slate-900 mb-8">{currentQ.question}</h2>
 
         <div className="space-y-3">
           {currentQ.options.map((option) => (
             <button
               key={option}
               onClick={() => handleAnswer(option)}
-              className="w-full text-left p-4 rounded-xl border border-slate-700 hover:border-teal-500 hover:bg-slate-800 font-medium text-slate-300 hover:text-white transition-all"
+              className="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-teal-500 hover:bg-slate-100 font-medium text-slate-600 hover:text-slate-900 transition-all"
             >
               {option}
             </button>
@@ -306,7 +306,7 @@ function Assessment() {
         {currentStep > 0 && (
           <button
             onClick={() => setCurrentStep(currentStep - 1)}
-            className="mt-8 text-slate-500 hover:text-slate-300 text-sm font-medium transition-colors"
+            className="mt-8 text-slate-500 hover:text-slate-600 text-sm font-medium transition-colors"
           >
             ← Back
           </button>
